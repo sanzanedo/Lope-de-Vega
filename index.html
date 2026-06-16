@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Literaria: Lope de Vega y el Soneto 126</title>
+    <style>
+        /* PALETA DE COLORES BARROCO INTERACTIVO */
+        :root {
+            --color-principal: #5c1d24; /* Burdeos/Vino Barroco */
+            --color-secundario: #8d2b36;
+            --color-acento: #c9a054; /* Dorado Envejecido */
+            --color-fondo: #fcfbfa;
+            --color-texto: #2c2523;
+            --color-tarjeta: #ffffff;
+            --color-borde: #e6dfd9;
+            --color-alerta: #b71c1c;
+            --fuente-titulos: 'Georgia', serif;
+            --fuente-cuerpo: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* CONFIGURACIÓN GENERAL */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            font-family: var(--fuente-cuerpo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            padding-bottom: 60px;
+            -webkit-user-select: none; /* Desactivar selección de texto */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-principal), #361014);
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 5px solid var(--color-acento);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-family: var(--fuente-titulos);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #e0d5d5;
+        }
+
+        .contenedor {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* PANTALLA DE ACCESO / IDENTIFICACIÓN */
+        #pantalla-identificacion {
+            background-color: var(--color-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-top: 50px;
+        }
+
+        .titulo-formulario {
+            font-family: var(--fuente-titulos);
+            color: var(--color-principal);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid var(--color-acento);
+            padding-bottom: 10px;
+        }
+
+        .grupo-campo {
+            margin-bottom: 20px;
+        }
+
+        .grupo-campo label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--color-principal);
+        }
+
+        .grupo-campo input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--color-borde);
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: #faf9f8;
+            transition: all 0.3s ease;
+        }
+
+        .grupo-campo input:focus {
+            outline: none;
+            border-color: var(--color-principal);
+            background-color: #ffffff;
+            box-shadow: 0 0 5px rgba(92, 29, 36, 0.2);
+        }
+
+        .boton-iniciar {
+            display: block;
+            width: 100%;
+            background-color: var(--color-principal);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-family: var(--fuente-titulos);
+            letter-spacing: 1px;
+            margin-top: 30px;
+        }
+
+        .boton-iniciar:hover {
+            background-color: var(--color-secundario);
+            border-bottom: 2px solid var(--color-acento);
+        }
+
+        /* INSTRUCCIONES INICIALES */
+        .aviso-normas {
+            background-color: #fff9e6;
+            border-left: 4px solid var(--color-acento);
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.9rem;
+        }
+
+        .aviso-normas ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        /* CUERPO CENTRAL DE LA ACTIVIDAD (OCULTO AL PRINCIPIO) */
+        #bloque-actividad {
+            display: none;
+        }
+
+        .seccion-card {
+            background-color: var(--color-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .seccion-card h2 {
+            font-family: var(--fuente-titulos);
+            color: var(--color-principal);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--color-borde);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* REPRODUCTOR DE AUDIO */
+        .reproductor-contenedor {
+            background-color: #f5ece2;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--color-principal);
+            text-align: center;
+        }
+
+        .reproductor-contenedor p {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            font-weight: bold;
+            color: var(--color-principal);
+        }
+
+        audio {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* PREGUNTAS TIPO TEST */
+        .pregunta-test {
+            margin-bottom: 25px;
+            background: #faf9f8;
+            padding: 15px 20px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        .pregunta-titulo {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--color-texto);
+        }
+
+        .opcion-label {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .opcion-label:hover {
+            color: var(--color-secundario);
+        }
+
+        .opcion-label input {
+            position: absolute;
+            left: 5px;
+            top: 4px;
+            cursor: pointer;
+            accent-color: var(--color-principal);
+        }
+
+        /* SONETO EXPOSITIVO */
+        .bloque-soneto {
+            font-family: var(--fuente-titulos);
+            font-size: 1.15rem;
+            text-align: center;
+            line-height: 1.8;
+            background-color: #fdfcf7;
+            padding: 25px;
+            border-radius: 6px;
+            border: 1px dashed var(--color-acento);
+            margin-bottom: 25px;
+            color: #3a322f;
+        }
+
+        /* TEXTO CON HUECOS (CLOZE) */
+        .texto-cloze {
+            line-height: 2;
+            font-size: 1.05rem;
+            background-color: #fffdfa;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--color-borde);
+        }
+
+        .texto-cloze select {
+            padding: 4px 8px;
+            font-size: 0.95rem;
+            font-family: var(--fuente-cuerpo);
+            border: 1px solid var(--color-principal);
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: var(--color-principal);
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 4px;
+        }
+
+        /* CUADRO DE TEXTO LIBRE (EXPRESIÓN ESCRITA) */
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 15px;
+            border: 1px solid var(--color-borde);
+            border-radius: 4px;
+            font-family: var(--fuente-cuerpo);
+            font-size: 1rem;
+            resize: vertical;
+            background-color: #faf9f8;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-principal);
+            background-color: #ffffff;
+            box-shadow: 0 0 5px rgba(92, 29, 36, 0.2);
+        }
+
+        .contador-palabras {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        /* BOTÓN ENVIAR EXAMEN */
+        .boton-enviar-final {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto 10px auto;
+            font-family: var(--fuente-titulos);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .boton-enviar-final:hover {
+            background-color: #1b5e20;
+            transform: translateY(-2px);
+        }
+
+        /* MODAL DE ADVERTENCIA E INFRAESTRUCTURA DE BLOQUEO */
+        .modal-advertencia {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-contenido {
+            background-color: #ffffff;
+            border-top: 8px solid var(--color-alerta);
+            padding: 30px;
+            border-radius: 6px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-contenido h3 {
+            color: var(--color-alerta);
+            font-family: var(--fuente-titulos);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-contenido p {
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .boton-cerrar-modal {
+            background-color: var(--color-principal);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* INDICADOR INVISIBLE / PANTALLA TOTAL DE EXPULSIÓN */
+        #pantalla-bloqueo-total {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1515;
+            color: #ffffff;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        #pantalla-bloqueo-total h2 {
+            font-family: var(--fuente-titulos);
+            color: #ff5252;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* PANTALLA ÉXITO */
+        #pantalla-exito {
+            display: none;
+            background-color: var(--color-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 8px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-top: 50px;
+        }
+
+        #pantalla-exito h2 {
+            color: #2e7d32;
+            font-family: var(--fuente-titulos);
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Lope de Vega y la Poesía del Barroco</h1>
+        <p>Contexto histórico, vitalismo y el laberinto de los afectos en el Soneto 126</p>
+    </header>
+
+    <div class="contenedor">
+
+        <!-- SECCIÓN 0: FORMULARIO DE ACCESO -->
+        <div id="pantalla-identificacion">
+            <h2 class="titulo-formulario">Identificación del Estudiante</h2>
+            <form id="form-acceso">
+                <div class="grupo-campo">
+                    <label for="nombre">Nombre y Apellidos:</label>
+                    <input type="text" id="nombre" required placeholder="Ej. Giulia Rossi">
+                </div>
+                <div class="grupo-campo">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" required placeholder="Ej. g.rossi@liceo.it">
+                </div>
+                <div class="grupo-campo">
+                    <label for="grupo">Curso / Grupo:</label>
+                    <input type="text" id="grupo" required placeholder="Ej. 4DLL - Liceo Cecioni">
+                </div>
+                <div class="aviso-normas">
+                    <strong>Normas estrictas de la prueba digital:</strong>
+                    <ul>
+                        <li>No está permitido copiar, pegar ni arrastrar texto dentro de la plataforma.</li>
+                        <li>No se permite hacer clic derecho.</li>
+                        <li><strong>Control de navegación activo:</strong> Si sales de esta pestaña o cambias de ventana, recibirás un primer aviso en pantalla. A la segunda salida, la prueba se bloqueará y las respuestas se enviarán automáticamente con estado de infracción.</li>
+                    </ul>
+                </div>
+                <button type="submit" class="boton-iniciar">COMENZAR ACTIVIDAD INTERACTIVA</button>
+            </form>
+        </div>
+
+        <!-- PANTALLA DE CONTROL: RESPUESTA EXITOSA -->
+        <div id="pantalla-exito">
+            <h2>¡Prueba Entregada con Éxito!</h2>
+            <p>Tus datos y respuestas han sido procesados correctamente.</p>
+            <p style="margin-top: 15px; font-size: 0.9rem; color: #555;">Se ha enviado un correo electrónico de confirmación con tu desglose a tu dirección y a la de tu profesora.</p>
+        </div>
+
+        <!-- CUERPO PRINCIPAL DE LA ACTIVIDAD (OCULTO INICIALMENTE) -->
+        <div id="bloque-actividad">
+
+            <!-- MÓDULO 1: COMPRENSIÓN AUDITIVA -->
+            <div class="seccion-card">
+                <h2>Módulo 1: Comprensión Auditiva</h2>
+                <div class="reproductor-contenedor">
+                    <p>Escucha con atención la locución de tu profesora sobre el contexto barroco de Lope de Vega:</p>
+                    <!-- El archivo de audio se subirá a tu repositorio con este mismo nombre -->
+                    <audio controls id="audio-literatura">
+                        <source src="audio-cultura.mp3" type="audio/mpeg">
+                        Tu navegador no soporta el elemento de audio HTML5.
+                    </audio>
+                </div>
+
+                <div class="pregunta-test">
+                    <p class="pregunta-titulo">1. Según la locución, ¿qué contradicción vital marcó profundamente la producción lírica de Lope de Vega?</p>
+                    <label class="opcion-label">
+                        <input type="radio" name="p1" value="A"> A) El rechazo absoluto de los teatros comerciales y su encierro definitivo en el monasterio.
+                    </label>
+                    <label class="opcion-label">
+                        <input type="radio" name="p1" value="B"> B) El vaivén constante entre sus encendidas pasiones amorosas y sus crisis de arrepentimiento religioso.
+                    </label>
+                    <label class="opcion-label">
+                        <input type="radio" name="p1" value="C"> C) Su desinterés por el éxito cortesano y su obsesión exclusiva por la lírica formal italiana de Petrarca.
+                    </label>
+                </div>
+
+                <div class="pregunta-test">
+                    <p class="pregunta-titulo">2. ¿Cómo influyó la crisis político-social del siglo XVII (Barroco) en la cosmovisión reflejada en sus poemas?</p>
+                    <label class="opcion-label">
+                        <input type="radio" name="p2" value="A"> A) Provocó una estética del desengaño y la complicidad formal, donde todo es mudanza y conflicto dinámico.
+                    </label>
+                    <label class="opcion-label">
+                        <input type="radio" name="p2" value="B"> B) Consolidó un optimismo humanista idéntico al del primer Renacimiento de Garcilaso.
+                    </label>
+                    <label class="opcion-label">
+                        <input type="radio" name="p2" value="C"> C) Provocó un aislamiento total del artista respecto a la política de la monarquía española.
+                    </label>
+                </div>
+
+                <div class="pregunta-test">
+                    <p class="pregunta-titulo">3. ¿Qué concepto define la gran aportación teatral de Lope que corría en paralelo a su fama poética?</p>
+                    <label class="opcion-label">
+                        <input type="radio" name="p3" value="A"> A) El auto sacramental de corte estrictamente teológico y trágico.
+                    </label>
+                    <label class="opcion-label">
+                        <input type="radio" name="p3" value="B"> B) La comedia nueva, caracterizada por la ruptura de las tres unidades clásicas y la mezcla de lo trágico y lo cómico.
+                    </label>
+                    <label class="opcion-label">
+                        <input type="radio" name="p3" value="C"> C) La ópera cortesana cantada íntegramente en italiano.
+                    </label>
+                </div>
+
+                <div class="pregunta-test">
+                    <p class="pregunta-titulo">4. En el contexto lírico barroco, la palabra "concepto" o el culteranismo implicaban:</p>
+                    <label class="opcion-label">
+                        <input type="radio" name="p4" value="A"> A) Una simplificación de los recursos poéticos para llegar a las masas analfabetas.
+                    </label>
+                    <label class="opcion-label">
+                        <input type="radio" name="p4" value="B"> B) Un juego mental ingenioso o el adorno formal extremo para impresionar a un público culto y agudo.
+                    </label>
+                    <label class="opcion-label">
+                        <input type="radio" name="p4" value="C"> C) El retorno fiel a las estructuras medievales de las jarchas mozárabes.
+                    </label>
+                </div>
+            </div>
+
+            <!-- MÓDULO 2: COMPRENSIÓN LECTORA Y ANÁLISIS POÉTICO -->
+            <div class="seccion-card">
+                <h2>Módulo 2: Análisis Poético del Soneto 126</h2>
+                <div class="bloque-soneto">
+                    Desmayarse, atreverse, estar furioso,<br>
+                    áspero, tierno, liberal, esquivo,<br>
+                    alentado, mortal, difunto, vivo,<br>
+                    leal, traidor, cobarde y animoso;<br><br>
+                    
+                    no hallar fuera del bien centro y reposo,<br>
+                    mostrarse alegre, triste, humilde, altivo,<br>
+                    enojado, valiente, fugitivo,<br>
+                    satisfecho, ofendido, receloso;<br><br>
+                    
+                    huir el rostro al claro desengaño,<br>
+                    beber veneno por licor süave,<br>
+                    olvidar el provecho, amar el daño;<br><br>
+                    
+                    creer que un cielo en un infierno cabe,<br>
+                    dar la vida y el alma a un desengaño;<br>
+                    esto es amor, quien lo probó lo sabe.
+                </div>
+
+                <div class="texto-cloze">
+                    <strong>Completa el análisis crítico del texto seleccionando la opción adecuada:</strong><br><br>
+                    El Soneto 126 de Lope de Vega es un prodigio de la lírica del Barroco. Estructuralmente está compuesto por términos encadenados de forma asindética. La figura retórica dominante en los dos cuartetos es la 
+                    <select id="cloze-1">
+                        <option value="">--selecciona--</option>
+                        <option value="antítesis">antítesis</option>
+                        <option value="metáfora">metáfora</option>
+                        <option value="hipérbole">hipérbole</option>
+                    </select>, que contrapone adjetivos opuestos de manera sucesiva (como "difunto, vivo" o "alegre, triste"). En el segundo terceto, el verso "beber veneno por licor süave" introduce un clarísimo 
+                    <select id="cloze-2">
+                        <option value="">--selecciona--</option>
+                        <option value="oxímoron">oxímoron</option>
+                        <option value="hipérbaton">hipérbaton</option>
+                        <option value="encabalgamiento">encabalgamiento</option>
+                    </select>, donde sensaciones incompatibles se fusionan para escenificar la naturaleza autodestructiva de la pasión. La composición carece de verbos principales conjugados en su inicio, recurriendo masivamente a los 
+                    <select id="cloze-3">
+                        <option value="">--selecciona--</option>
+                        <option value="infinitivos">infinitivos</option>
+                        <option value="gerundios">gerundios</option>
+                        <option value="participios">participios</option>
+                    </select> iniciales para universalizar la experiencia afectiva. Finalmente, el último verso opera como un cierre epigramático donde se resume la tesis fundamental: el amor es una verdad psicológica que elude la lógica y solo se valida a través de la 
+                    <select id="cloze-4">
+                        <option value="">--selecciona--</option>
+                        <option value="experiencia vivida">experiencia vivida</option>
+                        <option value="razón pura">razón pura</option>
+                        <option value="fe religiosa">fe religiosa</option>
+                    </select>.
+                </div>
+            </div>
+
+            <!-- MÓDULO 3: EXPRESIÓN ESCRITA -->
+            <div class="seccion-card">
+                <h2>Módulo 3: Comentario Crítico y Expresión Escrita</h2>
+                <p style="margin-bottom: 15px; font-size: 0.95rem; color: #333;">
+                    Analiza el último verso del poema de Lope de Vega: <strong>"esto es amor, quien lo probó lo sabe"</strong>. 
+                    Redacta un texto argumentativo de <strong>entre 100 y 150 palabras</strong> donde reflexiones críticamente sobre si la visión barroca del amor (marcada por las contradicciones, el sufrimiento voluntario y la turbación radical) sigue vigente en la psicología amorosa de los jóvenes del siglo XXI, o si ha cambiado debido a las nuevas formas de comunicación digital.
+                </p>
+                <textarea id="expresion-escrita" placeholder="Escribe aquí tu texto crítico argumentativo..."></textarea>
+                <div class="contador-palabras">Palabras: <span id="num-palabras">0</span> / 150</div>
+            </div>
+
+            <!-- BOTÓN DE ENVÍO VOLUNTARIO -->
+            <button id="btn-enviar" class="boton-enviar-final">FINALIZAR Y ENVIAR EXAMEN</button>
+        </div>
+    </div>
+
+    <!-- VENTANA MODAL PARA AVISO 1 DE FRAUDE -->
+    <div id="modal-fraude" class="modal-advertencia">
+        <div class="modal-contenido">
+            <h3>⚠️ ¡ADVERTENCIA DE SEGURIDAD!</h3>
+            <p>Has salido de la ventana o cambiado de pestaña del navegador. Esta acción rompe los protocolos estricto de control de la prueba.</p>
+            <p style="color: var(--color-alerta); font-weight: bold;">¡ATENCIÓN! Si vuelves a cambiar de pantalla una sola vez más, tu actividad quedará bloqueada y se enviará de forma automática inmediatamente con aviso de infracción.</p>
+            <button class="boton-cerrar-modal" id="btn-entendido">HE ENTENDIDO EL AVISO</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA TOTAL DE EXPULSIÓN DE LA PRUEBA -->
+    <div id="pantalla-bloqueo-total">
+        <h2>SISTEMA BLOQUEADO</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 15px;">Has infringido las normas de la prueba al cambiar de pantalla por segunda vez.</p>
+        <p style="color: #ff8a80; font-size: 1.1rem; max-width: 600px;">Tu interfaz se ha desactivado por completo. Las respuestas recopiladas hasta este instante han sido enviadas de forma automática al servidor de la profesora con registro de expulsión.</p>
+    </div>
+
+    <!-- MOTOR LÓGICO DE JAVASCRIPT (ANTIFRAUDE, RECOPILACIÓN Y CONEXIÓN BACKEND) -->
+    <script>
+        // CONFIGURACIÓN DE ENDPOINTS
+        const BACKEND_URL = "https://script.google.com/macros/s/AKfycbw5_g3rCrs1WeSCUhHEjYkAANYIOFjvAVtqibsfH3n0WdwqtlIzR9ffag4GqrYKuRcZ2w/exec";
+
+        // VARIABLES DE ESTADO Y CONTROL
+        let datosAlumno = {
+            nombre: "",
+            email: "",
+            grupo: ""
+        };
+
+        let metricasTrampa = {
+            intentosCopia: 0,
+            cambiosPantalla: 0,
+            estadoEntrega: "Completado"
+        };
+
+        let actividadComenzada = false;
+        let actividadEnviada = false;
+
+        // ELEMENTOS DOM
+        const formAcceso = document.getElementById("form-acceso");
+        const pantallaIdentificacion = document.getElementById("pantalla-identificacion");
+        const bloqueActividad = document.getElementById("bloque-actividad");
+        const pantallaExito = document.getElementById("pantalla-exito");
+        const pantallaBloqueoTotal = document.getElementById("pantalla-bloqueo-total");
+        const modalFraude = document.getElementById("modal-fraude");
+        const btnEntendido = document.getElementById("btn-entendido");
+        const btnEnviar = document.getElementById("btn-enviar");
+        const txtExpresion = document.getElementById("expresion-escrita");
+        const spanPalabras = document.getElementById("num-palabras");
+
+        // ACCESO DE ALUMNO E INICIO DE LA ACTIVIDAD
+        formAcceso.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            datosAlumno.nombre = document.getElementById("nombre").value.trim();
+            datosAlumno.email = document.getElementById("email").value.trim();
+            datosAlumno.grupo = document.getElementById("grupo").value.trim();
+
+            if(datosAlumno.nombre && datosAlumno.email && datosAlumno.grupo) {
+                pantallaIdentificacion.style.display = "none";
+                bloqueActividad.style.display = "block";
+                actividadComenzada = true;
+                // Forzar scroll al inicio
+                window.scrollTo(0,0);
+            }
+        });
+
+        // RESTRICCIONES ANTIFRAUDE 1: SISTEMA ANTI-COPIA Y PEGA ESTRICTO
+        document.addEventListener('copy', function(e) {
+            if(!actividadComenzada || actividadEnviada) return;
+            e.preventDefault();
+            metricasTrampa.intentosCopia++;
+        });
+
+        document.addEventListener('paste', function(e) {
+            if(!actividadComenzada || actividadEnviada) return;
+            e.preventDefault();
+            metricasTrampa.intentosCopia++;
+        });
+
+        document.addEventListener('contextmenu', function(e) {
+            if(!actividadComenzada || actividadEnviada) return;
+            e.preventDefault(); // Bloquear Clic Derecho por seguridad
+            metricasTrampa.intentosCopia++;
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            if(!actividadComenzada || actividadEnviada) return;
+            e.preventDefault(); // Evitar arrastre de textos
+        });
+
+        // RESTRICCIONES ANTIFRAUDE 2: CONTROL DE FOCO DE PANTALLA (VISIBILITY API)
+        document.addEventListener("visibilitychange", function() {
+            if (!actividadComenzada || actividadEnviada) return;
+
+            if (document.hidden) {
+                // El alumno ha salido de la pantalla (cambió pestaña o minimizó)
+                metricasTrampa.cambiosPantalla++;
+
+                if (metricasTrampa.cambiosPantalla === 1) {
+                    // Primer fallo: Mostrar aviso emergente modal de manera inmediata
+                    modalFraude.style.display = "flex";
+                    // Pausar el audio si estuviera en reproducción
+                    document.getElementById("audio-literatura").pause();
+                } else if (metricasTrampa.cambiosPantalla >= 2) {
+                    // Segundo fallo: Expulsión inmediata y envío automatizado forzado
+                    metricasTrampa.estadoEntrega = "Expulsado por cambio de pantalla";
+                    ejecutarEnvioAutomaticoForzado();
+                }
+            }
+        });
+
+        // CERRAR MODAL DE PRIMER AVISO
+        btnEntendido.addEventListener("click", function() {
+            modalFraude.style.display = "none";
+        });
+
+        // CONTADOR DE PALABRAS EN TIEMPO REAL
+        txtExpresion.addEventListener("input", function() {
+            let texto = txtExpresion.value.trim();
+            if (texto === "") {
+                spanPalabras.textContent = 0;
+                return;
+            }
+            let palabras = texto.split(/\s+/);
+            spanPalabras.textContent = palabras.length;
+            
+            if(palabras.length > 150) {
+                spanPalabras.style.color = "var(--color-alerta)";
+            } else {
+                spanPalabras.style.color = "#777";
+            }
+        });
+
+        // RECOPILADOR GENERAL DE RESPUESTAS INTERACTIVAS
+        function recolectarRespuestas() {
+            let respuestas = {};
+
+            // Recopilar Módulo 1 (Test de Audio)
+            const p1 = document.querySelector('input[name="p1"]:checked');
+            const p2 = document.querySelector('input[name="p2"]:checked');
+            const p3 = document.querySelector('input[name="p3"]:checked');
+            const p4 = document.querySelector('input[name="p4"]:checked');
+
+            respuestas["M1_Pregunta_1"] = p1 ? p1.value : "No respondida";
+            respuestas["M1_Pregunta_2"] = p2 ? p2.value : "No respondida";
+            respuestas["M1_Pregunta_3"] = p3 ? p3.value : "No respondida";
+            respuestas["M1_Pregunta_4"] = p4 ? p4.value : "No respondida";
+
+            // Recopilar Módulo 2 (Cloze Test / Desplegables)
+            respuestas["M2_Cloze_1_Retorica"] = document.getElementById("cloze-1").value || "Vacío";
+            respuestas["M2_Cloze_2_Oximoron"] = document.getElementById("cloze-2").value || "Vacío";
+            respuestas["M2_Cloze_3_Gramatica"] = document.getElementById("cloze-3").value || "Vacío";
+            respuestas["M2_Cloze_4_Conclusion"] = document.getElementById("cloze-4").value || "Vacío";
+
+            // Recopilar Módulo 3 (Expresión libre)
+            respuestas["M3_Comentario_Critico"] = txtExpresion.value.trim() || "Sin texto introducido";
+
+            return respuestas;
+        }
+
+        // ENVÍO VOLUNTARIO (BOTÓN VERDE)
+        btnEnviar.addEventListener("click", function() {
+            if (actividadEnviada) return;
+            
+            // Confirmación de seguridad nativa
+            if (confirm("¿Estás seguro de que deseas finalizar y enviar tu ejercicio literario?")) {
+                enviarAFormularioServidor();
+            }
+        });
+
+        // FUNCIÓN CENTRAL DE ENVÍO DE DATOS VÍA FETCH API POST
+        function enviarAFormularioServidor() {
+            actividadEnviada = true;
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = "ENVIANDO DATOS...";
+
+            // Estructura idéntica del JSON esperado por el Apps Script Backend
+            let payload = {
+                nombre: datosAlumno.nombre,
+                email: datosAlumno.email,
+                grupo: datosAlumno.grupo,
+                intentosCopia: metricasTrampa.intentosCopia,
+                cambiosPantalla: metricasTrampa.cambiosPantalla,
+                estadoEntrega: metricasTrampa.estadoEntrega,
+                respuestas: recolectarRespuestas()
+            };
+
+            fetch(BACKEND_URL, {
+                method: "POST",
+                mode: "no-cors", // Evita problemas cross-origin restrictivos en ejecución serverless
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function() {
+                // Con no-cors no podemos validar el json de respuesta, asumimos éxito inmediato al resolverse la promesa de red
+                bloqueActividad.style.display = "none";
+                pantallaExito.style.display = "block";
+                window.scrollTo(0,0);
+            })
+            .catch(function(err) {
+                console.error("Error en comunicación:", err);
+                alert("Hubo un problema de conexión. Inténtalo de nuevo.");
+                actividadEnviada = false;
+                btnEnviar.disabled = false;
+                btnEnviar.textContent = "FINALIZAR Y ENVIAR EXAMEN";
+            });
+        }
+
+        // AUTO-ENVÍO FORZOSO TRAS LA SEGUNDA INFRACCIÓN
+        function ejecutarEnvioAutomaticoForzado() {
+            actividadEnviada = true;
+            modalFraude.style.display = "none";
+            bloqueActividad.style.display = "none";
+            pantallaBloqueoTotal.style.display = "flex";
+            window.scrollTo(0,0);
+
+            let payload = {
+                nombre: datosAlumno.nombre,
+                email: datosAlumno.email,
+                grupo: datosAlumno.grupo,
+                intentosCopia: metricasTrampa.intentosCopia,
+                cambiosPantalla: metricasTrampa.cambiosPantalla,
+                estadoEntrega: metricasTrampa.estadoEntrega,
+                respuestas: recolectarRespuestas()
+            };
+
+            fetch(BACKEND_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+        }
+    </script>
+</body>
+</html>
